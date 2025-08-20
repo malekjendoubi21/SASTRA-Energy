@@ -39,6 +39,9 @@ const Navbar = ({ onNavigate }) => {
           <button className="nav-link" onClick={() => handleNavClick('about', 'about')}>
             À Propos
           </button>
+          <button className="nav-link" onClick={() => handleNavClick('references', 'references')}>
+            Nos Références
+          </button>
           <button className="nav-link" onClick={() => handleNavClick('home', 'services')}>
             Services
           </button>

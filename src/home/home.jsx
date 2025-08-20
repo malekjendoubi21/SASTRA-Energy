@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import SastraLogo from '../components/SastraLogo';
 import './Home.css';
 
-const Home = () => {
+const Home = ({ onNavigate }) => {
   const [showPrompt, setShowPrompt] = useState(true);
   const [isClosing, setIsClosing] = useState(false);
 
@@ -54,8 +54,12 @@ const Home = () => {
                 </div>
               </div>
               <div className="hero-buttons">
-                <button className="btn-primary">Nos Solutions</button>
-                <button className="btn-secondary">Contactez-nous</button>
+                <button className="btn-primary" onClick={() => onNavigate && onNavigate('references')}>
+                  Nos Solutions
+                </button>
+                <button className="btn-secondary" onClick={() => onNavigate && onNavigate('contact')}>
+                  Contactez-nous
+                </button>
               </div>
             </div>
             <div className="hero-image">
@@ -188,8 +192,12 @@ const Home = () => {
           <h2>Prêt à Passer à l'Énergie Solaire ?</h2>
           <p>Contactez nos experts pour une étude personnalisée de votre projet</p>
           <div className="cta-buttons">
-            <button className="btn-primary">Demander un Devis</button>
-            <button className="btn-outline">En Savoir Plus</button>
+            <button className="btn-primary" onClick={() => onNavigate && onNavigate('contact')}>
+              Demander un Devis
+            </button>
+            <button className="btn-outline" onClick={() => onNavigate && onNavigate('references')}>
+              En Savoir Plus
+            </button>
           </div>
         </div>
       </section>
