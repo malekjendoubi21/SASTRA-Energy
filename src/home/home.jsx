@@ -5,6 +5,14 @@ import './Home.css';
 const Home = ({ onNavigate }) => {
   const [showPrompt, setShowPrompt] = useState(true);
   const [isClosing, setIsClosing] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
+  const installationImages = [
+    '/home/photo1.jpeg',
+    '/home/photo2.jpeg',
+    '/home/photo3.jpeg',
+    '/home/photo4.jpeg'
+  ];
 
   useEffect(() => {
     // Masquer le prompt après 8 secondes
@@ -13,6 +21,17 @@ const Home = ({ onNavigate }) => {
     }, 8000);
 
     return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    // Changer l'image toutes les 4 secondes pour le diaporama
+    const imageInterval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => 
+        prevIndex === installationImages.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 4000);
+    
+    return () => clearInterval(imageInterval);
   }, []);
 
   const handleClosePrompt = () => {
@@ -25,6 +44,33 @@ const Home = ({ onNavigate }) => {
 
   return (
     <div className="home">
+      {/* Installations Showcase */}
+      <section className="installations-showcase">
+        <div className="installation-slider">
+          {installationImages.map((image, index) => (
+            <div 
+              key={index} 
+              className={`installation-slide ${index === currentImageIndex ? 'active' : ''}`}
+              style={{ backgroundImage: `url(${image})` }}
+            >
+              <div className="installation-overlay">
+                <h2>Nos Installations Photovoltaïques</h2>
+                <p>Des solutions d'énergie solaire adaptées à tous vos besoins</p>
+              </div>
+            </div>
+          ))}
+          <div className="slider-indicators">
+            {installationImages.map((_, index) => (
+              <span 
+                key={index} 
+                className={`indicator ${index === currentImageIndex ? 'active' : ''}`}
+                onClick={() => setCurrentImageIndex(index)}
+              ></span>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Hero Section */}
       <section className="hero hexagon-bg" id="home">
         <div className="hero-container">

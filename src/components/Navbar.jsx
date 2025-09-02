@@ -26,7 +26,7 @@ const Navbar = ({ onNavigate }) => {
       <div className="nav-container">
         <div className="nav-logo" onClick={() => handleNavClick('home')}>
           <img 
-            src="/logo.jpg" 
+            src="/logo.png"
             alt="Sastra Energy Logo" 
             className="logo-image"
           />
@@ -53,7 +53,7 @@ const Navbar = ({ onNavigate }) => {
           </button>
         </div>
 
-        <div className="nav-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+        <div className={`nav-toggle ${isMenuOpen ? 'active' : ''}`} onClick={() => setIsMenuOpen(!isMenuOpen)}>
           <span className="bar"></span>
           <span className="bar"></span>
           <span className="bar"></span>
@@ -62,5 +62,6 @@ const Navbar = ({ onNavigate }) => {
     </nav>
   );
 };
+
 
 export default Navbar;
