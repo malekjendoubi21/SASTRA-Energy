@@ -8,7 +8,7 @@ const Home = ({ onNavigate }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   
   const installationImages = [
-    '/home/photo1.jpeg',
+    '/home/photo1.jpg',
     '/home/photo2.jpeg',
     '/home/photo3.jpeg',
     '/home/photo4.jpeg'

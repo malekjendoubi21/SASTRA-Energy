@@ -182,6 +182,42 @@ const About = () => {
         </div>
       </section>
 
+      {/* Partners Section */}
+      <section className="partners-section" id="partners">
+        <div className="container">
+          <div className="section-header">
+            <h2>Nos Partenaires</h2>
+            <p>Nous collaborons avec les meilleures marques internationales pour garantir qualité et performance</p>
+          </div>
+          
+          <div className="partners-grid">
+            <div className="partner-card">
+              <a href="https://www.luxor.solar/en" target="_blank" rel="noopener noreferrer">
+                <div className="partner-logo">
+                  <img src="/partners/Luxor.jpg" alt="Luxor Solar" />
+                </div>
+                <div className="partner-info">
+                  <h3>Luxor Solar</h3>
+                  <p>Fabricant allemand de panneaux photovoltaïques de haute qualité depuis 2004.</p>
+                </div>
+              </a>
+            </div>
+            
+            <div className="partner-card">
+              <a href="https://www.sma-france.com/" target="_blank" rel="noopener noreferrer">
+                <div className="partner-logo">
+                  <img src="/partners/SMA-Solar-Technology.jpg" alt="SMA Solar Technology" />
+                </div>
+                <div className="partner-info">
+                  <h3>SMA Solar Technology</h3>
+                  <p>Leader mondial dans le développement et la production d'onduleurs solaires.</p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Locations Section */}
       <section className="locations-section" id="locations">
         <div className="container">

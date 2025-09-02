@@ -54,9 +54,7 @@ const Navbar = ({ onNavigate }) => {
         </div>
 
         <div className={`nav-toggle ${isMenuOpen ? 'active' : ''}`} onClick={() => setIsMenuOpen(!isMenuOpen)}>
-          <span className="bar"></span>
-          <span className="bar"></span>
-          <span className="bar"></span>
+          <span className="menu-text">Sastra Energy</span>
         </div>
       </div>
     </nav>

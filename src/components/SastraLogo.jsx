@@ -7,7 +7,7 @@ const SastraLogo = ({ size = 40, className = "" }) => {
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <div style={{ display: 'flex', gap: '2px', marginBottom: '-5px' }}>
           <div style={{
-            width: size * 0.4,
+            width: size * 0.8,
             height: size * 0.35,
             background: 'linear-gradient(135deg, #ffd700, #ffb700)',
             clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)',
