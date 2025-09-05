@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import SastraLogo from '../components/SastraLogo';
 import './Home.css';
 
 const Home = ({ onNavigate }) => {
@@ -8,7 +7,7 @@ const Home = ({ onNavigate }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   
   const installationImages = [
-    '/home/photo1.jpg',
+    '/home/photo1.jpeg',
     '/home/photo2.jpeg',
     '/home/photo3.jpeg',
     '/home/photo4.jpeg'
@@ -44,33 +43,6 @@ const Home = ({ onNavigate }) => {
 
   return (
     <div className="home">
-      {/* Installations Showcase */}
-      <section className="installations-showcase">
-        <div className="installation-slider">
-          {installationImages.map((image, index) => (
-            <div 
-              key={index} 
-              className={`installation-slide ${index === currentImageIndex ? 'active' : ''}`}
-              style={{ backgroundImage: `url(${image})` }}
-            >
-              <div className="installation-overlay">
-                <h2>Nos Installations Photovoltaïques</h2>
-                <p>Des solutions d'énergie solaire adaptées à tous vos besoins</p>
-              </div>
-            </div>
-          ))}
-          <div className="slider-indicators">
-            {installationImages.map((_, index) => (
-              <span 
-                key={index} 
-                className={`indicator ${index === currentImageIndex ? 'active' : ''}`}
-                onClick={() => setCurrentImageIndex(index)}
-              ></span>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Hero Section */}
       <section className="hero hexagon-bg" id="home">
         <div className="hero-container">
@@ -109,12 +81,23 @@ const Home = ({ onNavigate }) => {
               </div>
             </div>
             <div className="hero-image">
-              <div className="solar-panel-animation">
-                <div className="panel panel-1"></div>
-                <div className="panel panel-2"></div>
-                <div className="panel panel-3"></div>
-                <div className="floating-logo">
-                  <SastraLogo size={80} />
+              <div className="hero-slideshow">
+                {installationImages.map((image, index) => (
+                  <div 
+                    key={index} 
+                    className={`hero-slide ${index === currentImageIndex ? 'active' : ''}`}
+                  >
+                    <img src={image} alt={`Installation ${index + 1}`} />
+                  </div>
+                ))}
+                <div className="hero-indicators">
+                  {installationImages.map((_, index) => (
+                    <span 
+                      key={index} 
+                      className={`indicator ${index === currentImageIndex ? 'active' : ''}`}
+                      onClick={() => setCurrentImageIndex(index)}
+                    ></span>
+                  ))}
                 </div>
               </div>
             </div>

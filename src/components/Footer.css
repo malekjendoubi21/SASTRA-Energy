@@ -1,5 +1,5 @@
 .footer {
-  background: var(--gradient-primary);
+  background: #1e3a5f;
   color: white;
   padding: 40px 0 0 0;
   margin-top: 60px;
@@ -28,18 +28,14 @@
   font-size: 1.6rem;
   font-weight: 700;
   margin-bottom: 12px;
-  color: #fff;
-  background: linear-gradient(135deg, var(--primary-yellow), var(--secondary-yellow));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #FFD700;
 }
 
 .footer-subtitle {
   font-size: 1rem;
   font-weight: 600;
   margin-bottom: 15px;
-  color: var(--primary-yellow);
+  color: #FFD700;
 }
 
 .footer-description {
@@ -70,7 +66,7 @@
 
 .social-link:hover {
   background: rgba(255, 215, 0, 0.3);
-  border-color: var(--primary-yellow);
+  border-color: #FFD700;
   transform: translateY(-2px);
 }
 
@@ -98,13 +94,13 @@
   content: '▶';
   position: absolute;
   left: 0;
-  color: var(--primary-yellow);
+  color: #FFD700;
   font-size: 0.7rem;
   top: 2px;
 }
 
 .footer-links a:hover {
-  color: var(--primary-yellow);
+  color: #FFD700;
   transform: translateX(5px);
 }
 
@@ -155,7 +151,7 @@
 }
 
 .footer-bottom-links a:hover {
-  color: var(--primary-yellow);
+  color: #FFD700;
 }
 
 /* Responsive Design */
