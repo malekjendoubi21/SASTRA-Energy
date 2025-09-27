@@ -1,0 +1,337 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-md);
+    z-index: 1000;
+    transition: var(--transition-smooth);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 120px;
+}
+
+.nav-logo {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.nav-logo:hover {
+    transform: scale(1.02);
+}
+
+.logo-image {
+    height: 200px;
+    width: auto;
+    object-fit: contain;
+    transition: var(--transition-smooth);
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+.logo-image:hover {
+    filter: brightness(1.1);
+}
+
+.logo-text {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-blue);
+    line-height: 1;
+}
+
+.logo-subtitle {
+    font-size: 0.75rem;
+    color: var(--primary-yellow);
+    font-weight: 600;
+    margin-top: -2px;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.nav-link {
+    background: none;
+    border: none;
+    color: var(--dark-gray);
+    font-weight: 500;
+    font-size: 1rem;
+    transition: var(--transition-smooth);
+    position: relative;
+    padding: 0.5rem 0;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.nav-link:hover {
+    color: var(--primary-blue);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--gradient-primary);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.contact-btn {
+    background: #FFD700 !important;
+    color: #1e3a5f !important;
+    padding: 0.75rem 1.5rem !important;
+    border-radius: 25px;
+    transition: var(--transition-smooth);
+    box-shadow: var(--shadow-sm);
+    font-weight: 600;
+}
+
+.contact-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    background: #1e3a5f !important;
+    color: #FFD700 !important;
+}
+
+.contact-btn::after {
+    display: none;
+}
+
+.nav-toggle {
+    display: none;
+    cursor: pointer;
+    padding: 5px;
+    background: white;
+    /* Fond blanc simple */
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: auto;
+    transition: all 0.3s ease;
+    z-index: 100;
+    position: relative;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.menu-text {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary-blue);
+    text-align: center;
+    line-height: 1.2;
+    padding: 5px 8px;
+}
+
+
+/* Suppression des styles non utilisés */
+
+.nav-toggle:before {
+    display: none;
+}
+
+.nav-toggle:hover:before {
+    display: none;
+}
+
+
+/* Mobile Menu */
+
+@media screen and (max-width: 768px) {
+    .nav-container {
+        padding: 0 15px;
+        height: 90px;
+    }
+    .navbar {
+        height: 90px;
+    }
+    .logo-image {
+        height: 75px;
+    }
+    .nav-menu {
+        position: fixed;
+        left: -100%;
+        top: 90px;
+        flex-direction: column;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(10px);
+        width: 100%;
+        height: calc(100vh - 90px);
+        text-align: center;
+        transition: 0.3s;
+        gap: 0;
+        padding-top: 2rem;
+        box-shadow: var(--shadow-lg);
+    }
+    .nav-menu.active {
+        left: 0;
+    }
+    .nav-link {
+        padding: 0.9rem 0;
+        font-size: 1rem;
+        display: block;
+        width: 100%;
+        border-radius: 0;
+    }
+    .nav-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .nav-toggle:hover {
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+        background: #f9f9f9;
+    }
+    .nav-toggle.active {
+        background: var(--primary-blue);
+        /* Changement de couleur lorsque le menu est ouvert */
+    }
+    .nav-toggle.active .menu-text {
+        color: white;
+        /* Texte blanc lorsque le menu est ouvert */
+    }
+    .contact-btn {
+        margin: 0.8rem 1.5rem;
+        border-radius: 20px;
+        padding: 0.7rem 1.5rem !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .nav-container {
+        height: 70px;
+        padding: 0 15px;
+    }
+    .navbar {
+        height: 70px;
+    }
+    .logo-image {
+        height: 55px;
+    }
+    .nav-menu {
+        top: 70px;
+        height: calc(100vh - 70px);
+    }
+    .nav-link {
+        padding: 1rem 0;
+        font-size: 1rem;
+    }
+    .contact-btn {
+        margin: 0.8rem 1.5rem;
+        padding: 0.8rem 1.5rem !important;
+    }
+}
+
+
+/* User Menu Styles */
+
+.user-menu-container {
+    position: relative;
+}
+
+.user-btn {
+    display: flex !important;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--primary-blue) !important;
+    color: white !important;
+    padding: 0.5rem 1rem !important;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.user-btn:hover {
+    background: var(--primary-blue-dark) !important;
+    color: white !important;
+}
+
+.dropdown-arrow {
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+}
+
+.dropdown-arrow.open {
+    transform: rotate(180deg);
+}
+
+.user-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: var(--shadow-md);
+    min-width: 150px;
+    z-index: 1001;
+    margin-top: 0.5rem;
+}
+
+.user-dropdown button {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.9rem;
+    color: var(--dark-gray);
+    transition: background-color 0.2s ease;
+}
+
+.user-dropdown button:hover {
+    background: #f5f5f5;
+}
+
+.user-dropdown button:first-child {
+    border-radius: 8px 8px 0 0;
+}
+
+.user-dropdown button:last-child {
+    border-radius: 0 0 8px 8px;
+}
+
+
+/* Mobile User Menu */
+
+@media screen and (max-width: 768px) {
+    .user-menu-container {
+        margin: 0.8rem 1.5rem;
+    }
+    .user-btn {
+        padding: 0.7rem 1rem !important;
+    }
+    .user-dropdown {
+        position: static;
+        box-shadow: none;
+        border: none;
+        margin-top: 0;
+        background: rgba(255, 255, 255, 0.95);
+    }
+    .user-dropdown button {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
+}
