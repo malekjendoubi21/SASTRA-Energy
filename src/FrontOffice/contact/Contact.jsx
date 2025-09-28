@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './Contact.css';
 
 const Contact = () => {
@@ -11,6 +12,42 @@ const Contact = () => {
     projectType: ''
   });
 
+  const [statusMessage, setStatusMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [projectTypes, setProjectTypes] = useState([]);
+  const [isLoadingTypes, setIsLoadingTypes] = useState(true);
+  const [locations, setLocations] = useState([]);
+  const [isLoadingLocations, setIsLoadingLocations] = useState(true);
+
+  useEffect(() => {
+    const fetchProjectTypes = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/project-types`);
+        setProjectTypes(Array.isArray(response.data.data) ? response.data.data : []);
+      } catch (error) {
+        console.error('Erreur lors du chargement des types de projet:', error);
+        setProjectTypes([]);
+      } finally {
+        setIsLoadingTypes(false);
+      }
+    };
+
+    const fetchLocations = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/locations`);
+        setLocations(Array.isArray(response.data) ? response.data : []);
+      } catch (error) {
+        console.error('Erreur lors du chargement des bureaux:', error);
+        setLocations([]);
+      } finally {
+        setIsLoadingLocations(false);
+      }
+    };
+
+    fetchProjectTypes();
+    fetchLocations();
+  }, []);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -19,36 +56,35 @@ const Contact = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Ici vous pouvez ajouter la logique d'envoi du formulaire
-    console.log('Form submitted:', formData);
-    alert('Merci pour votre message ! Nous vous contacterons bientôt.');
-  };
+    setIsLoading(true);
+    setStatusMessage('');
 
-  const locations = [
-    {
-      city: "Le Bardo",
-      address: "720 Av, Habib Bourguiba, 2000",
-      contact: "36 437 473",
-      isPrimary: true
-    },
-    {
-      city: "Béja",
-      address: "Rue du 1er janvier (au-dessus de Wifak Bank), 1er étage Bureau 1, 9000",
-      contact: "78 455 500"
-    },
-    {
-      city: "Hammamet",
-      address: "Rue de l'environnement, Mrezga",
-      contact: "72 263 950"
-    },
-    {
-      city: "Sousse",
-      address: "Rond-point Rouabi, (vers autoroute), Kalaa Sghira, 4021",
-      contact: "98 634 618 / 98 154 419"
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/contacts`, formData);
+      
+      if (response.data.success) {
+        setStatusMessage('Message envoyé avec succès ! Nous vous contacterons bientôt.');
+        // Réinitialiser le formulaire
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          subject: '',
+          message: '',
+          projectType: ''
+        });
+      } else {
+        setStatusMessage('Erreur lors de l\'envoi du message. Veuillez réessayer.');
+      }
+    } catch (error) {
+      console.error('Erreur lors de l\'envoi:', error);
+      setStatusMessage('Erreur lors de l\'envoi du message. Veuillez vérifier votre connexion et réessayer.');
+    } finally {
+      setIsLoading(false);
     }
-  ];
+  };
 
   return (
     <div className="contact" id="contact">
@@ -166,15 +202,16 @@ const Contact = () => {
                     name="projectType"
                     value={formData.projectType}
                     onChange={handleInputChange}
+                    disabled={isLoadingTypes}
                   >
-                    <option value="">Sélectionnez un type de projet</option>
-                    <option value="residential">Installation Résidentielle</option>
-                    <option value="commercial">Installation Commerciale</option>
-                    <option value="industrial">Installation Industrielle</option>
-                    <option value="pumping">Pompage Solaire</option>
-                    <option value="isolated">Site Isolé</option>
-                    <option value="maintenance">Maintenance/Réparation</option>
-                    <option value="other">Autre</option>
+                    <option value="">
+                      {isLoadingTypes ? 'Chargement...' : 'Sélectionnez un type de projet'}
+                    </option>
+                    {projectTypes.map((type) => (
+                      <option key={type._id} value={type._id}>
+                        {type.label}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
@@ -203,8 +240,14 @@ const Contact = () => {
                   ></textarea>
                 </div>
 
-                <button type="submit" className="submit-btn">
-                  Envoyer le Message
+                {statusMessage && (
+                  <div className={`status-message ${statusMessage.includes('succès') ? 'success' : 'error'}`}>
+                    {statusMessage}
+                  </div>
+                )}
+
+                <button type="submit" className="submit-btn" disabled={isLoading}>
+                  {isLoading ? 'Envoi en cours...' : 'Envoyer le Message'}
                 </button>
               </form>
             </div>
@@ -221,25 +264,29 @@ const Contact = () => {
           </div>
           
           <div className="locations-grid">
-            {locations.map((location, index) => (
-              <div key={index} className={`location-card ${location.isPrimary ? 'primary' : ''}`}>
-                {location.isPrimary && <div className="primary-badge">Siège Principal</div>}
-                <div className="location-header">
-                  <div className="location-icon">📍</div>
-                  <h3>{location.city}</h3>
-                </div>
-                <div className="location-info">
-                  <div className="location-address">
-                    <span className="info-icon">🏢</span>
-                    <span>{location.address}</span>
+            {isLoadingLocations ? (
+              <div className="loading-locations">Chargement des bureaux...</div>
+            ) : (
+              locations.map((location, index) => (
+                <div key={location._id || index} className={`location-card ${location.isPrimary ? 'primary' : ''}`}>
+                  {location.isPrimary && <div className="primary-badge">Siège Principal</div>}
+                  <div className="location-header">
+                    <div className="location-icon">📍</div>
+                    <h3>{location.city}</h3>
                   </div>
-                  <div className="location-contact">
-                    <span className="info-icon">📞</span>
-                    <span>+216 {location.contact}</span>
+                  <div className="location-info">
+                    <div className="location-address">
+                      <span className="info-icon">🏢</span>
+                      <span>{location.address}</span>
+                    </div>
+                    <div className="location-contact">
+                      <span className="info-icon">📞</span>
+                      <span>+216 {location.contact}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </section>

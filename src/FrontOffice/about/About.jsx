@@ -1,30 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './About.css';
 
 const About = () => {
-  const locations = [
-    {
-      city: "Le Bardo",
-      address: "720 Av, Habib Bourguiba, 2000",
-      contact: "36 437 473",
-      isPrimary: true
-    },
-    {
-      city: "Béja",
-      address: "Rue du 1er janvier (au-dessus de Wifak Bank), 1er étage Bureau 1, 9000",
-      contact: "78 455 500"
-    },
-    {
-      city: "Hammamet",
-      address: "Rue de l'environnement, Mrezga",
-      contact: "72 263 950"
-    },
-    {
-      city: "Sousse",
-      address: "Rond-point Rouabi, (vers autoroute), Kalaa Sghira, 4021",
-      contact: "98 634 618 / 98 154 419"
-    }
-  ];
+  const [locations, setLocations] = useState([]);
+  const [partners, setPartners] = useState([]);
+  const [isLoadingLocations, setIsLoadingLocations] = useState(true);
+  const [isLoadingPartners, setIsLoadingPartners] = useState(true);
+
+  useEffect(() => {
+    const fetchLocations = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/locations`);
+        setLocations(Array.isArray(response.data) ? response.data : []);
+      } catch (error) {
+        console.error('Erreur lors du chargement des bureaux:', error);
+        setLocations([]);
+      } finally {
+        setIsLoadingLocations(false);
+      }
+    };
+
+    const fetchPartners = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/partners`);
+        setPartners(Array.isArray(response.data) ? response.data : []);
+      } catch (error) {
+        console.error('Erreur lors du chargement des partenaires:', error);
+        setPartners([]);
+      } finally {
+        setIsLoadingPartners(false);
+      }
+    };
+
+    fetchLocations();
+    fetchPartners();
+  }, []);
 
   return (
     <div className="about" id="about">
@@ -191,29 +202,23 @@ const About = () => {
           </div>
           
           <div className="partners-grid">
-            <div className="partner-card">
-              <a href="https://www.luxor.solar/en" target="_blank" rel="noopener noreferrer">
-                <div className="partner-logo">
-                  <img src="/partners/Luxor.jpg" alt="Luxor Solar" />
+            {isLoadingPartners ? (
+              <div className="loading-partners">Chargement des partenaires...</div>
+            ) : (
+              partners.map((partner) => (
+                <div key={partner._id} className="partner-card">
+                  <a href={partner.website} target="_blank" rel="noopener noreferrer">
+                    <div className="partner-logo">
+                      <img src={partner.logo} alt={partner.name} />
+                    </div>
+                    <div className="partner-info">
+                      <h3>{partner.name}</h3>
+                      <p>{partner.description}</p>
+                    </div>
+                  </a>
                 </div>
-                <div className="partner-info">
-                  <h3>Luxor Solar</h3>
-                  <p>Fabricant allemand de panneaux photovoltaïques de haute qualité depuis 2004.</p>
-                </div>
-              </a>
-            </div>
-            
-            <div className="partner-card">
-              <a href="https://www.sma-france.com/" target="_blank" rel="noopener noreferrer">
-                <div className="partner-logo">
-                  <img src="/partners/SMA-Solar-Technology.jpg" alt="SMA Solar Technology" />
-                </div>
-                <div className="partner-info">
-                  <h3>SMA Solar Technology</h3>
-                  <p>Leader mondial dans le développement et la production d'onduleurs solaires.</p>
-                </div>
-              </a>
-            </div>
+              ))
+            )}
           </div>
         </div>
       </section>
@@ -227,25 +232,29 @@ const About = () => {
           </div>
           
           <div className="locations-grid">
-            {locations.map((location, index) => (
-              <div key={index} className={`location-card ${location.isPrimary ? 'primary' : ''}`}>
-                {location.isPrimary && <div className="primary-badge">Siège Principal</div>}
-                <div className="location-header">
-                  <div className="location-icon">📍</div>
-                  <h3>{location.city}</h3>
-                </div>
-                <div className="location-info">
-                  <div className="location-address">
-                    <span className="info-icon">🏢</span>
-                    <span>{location.address}</span>
+            {isLoadingLocations ? (
+              <div className="loading-locations">Chargement des bureaux...</div>
+            ) : (
+              locations.map((location) => (
+                <div key={location._id} className={`location-card ${location.isPrimary ? 'primary' : ''}`}>
+                  {location.isPrimary && <div className="primary-badge">Siège Principal</div>}
+                  <div className="location-header">
+                    <div className="location-icon">📍</div>
+                    <h3>{location.city}</h3>
                   </div>
-                  <div className="location-contact">
-                    <span className="info-icon">📞</span>
-                    <span>+216 {location.contact}</span>
+                  <div className="location-info">
+                    <div className="location-address">
+                      <span className="info-icon">🏢</span>
+                      <span>{location.address}</span>
+                    </div>
+                    <div className="location-contact">
+                      <span className="info-icon">📞</span>
+                      <span>+216 {location.contact}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
           
           <div className="contact-highlight">

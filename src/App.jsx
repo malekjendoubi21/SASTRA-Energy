@@ -9,6 +9,8 @@ import Login from './auth/Login'
 import Profile from './FrontOffice/profile/Profile'
 import './App.css'
 import Dashboard from './BackOffice/dashboard/Dashboard'
+import ContactManagement from './BackOffice/contacts/contact'
+import LocationsManagement from './BackOffice/location/locations'
 import ProfileAdmin from './BackOffice/profileAdmin/ProfileAdmin'
 import UsersManagement from './BackOffice/usersManagement/UsersManagement'
 
@@ -30,7 +32,7 @@ function App() {
       
       // Vérifier si on refresh sur une page backoffice
       const hash = window.location.hash.replace('#', '')
-      const isBackOfficePage = ['dashboard', 'profileadmin', 'usermanagements'].includes(hash)
+      const isBackOfficePage = ['dashboard', 'contacts', 'locations', 'profileadmin', 'usermanagements'].includes(hash)
       
       if (isBackOfficePage && typeUser === 'admin') {
         setCurrentPage(hash)
@@ -101,6 +103,10 @@ function App() {
     switch(currentPage) {
       case 'dashboard':
         return <Dashboard onNavigate={handleNavigation} onLogout={handleLogout} currentPage={currentPage} />
+      case 'contacts':
+        return <ContactManagement onNavigate={handleNavigation} onLogout={handleLogout} currentPage={currentPage} />
+      case 'locations':
+        return <LocationsManagement onNavigate={handleNavigation} onLogout={handleLogout} currentPage={currentPage} />
       case 'profileadmin':
         return <ProfileAdmin onNavigate={handleNavigation} onLogout={handleLogout} currentPage={currentPage} />
       case 'usermanagements':
@@ -111,12 +117,12 @@ function App() {
   }
 
   const renderCurrentPage = () => {
-    const isBackOffice = ['dashboard', 'profileadmin', 'usermanagements'].includes(currentPage);
+    const isBackOffice = ['dashboard', 'contacts', 'locations', 'profileadmin', 'usermanagements'].includes(currentPage);
     return isBackOffice ? renderBackOfficePage() : renderFrontOfficePage();
   }
 
   // Vérifier si on est dans le backoffice
-  const isBackOffice = ['dashboard', 'profileadmin', 'usermanagements'].includes(currentPage);
+  const isBackOffice = ['dashboard', 'contacts', 'locations', 'profileadmin', 'usermanagements'].includes(currentPage);
 
   if (isLoading) {
     return (

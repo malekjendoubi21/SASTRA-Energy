@@ -3,13 +3,15 @@ import './BackOfficeMenu.css';
 
 const BackOfficeMenu = ({ onNavigate, onLogout, currentPage }) => {
   const menuItems = [
-    { key: 'dashboard', label: 'Dashboard', icon: '📊' },
-    { key: 'usermanagements', label: 'Gestion Utilisateurs', icon: '👥' },
-    { key: 'profileadmin', label: 'Profil Admin', icon: '👤' }
+    { key: 'dashboard', label: 'Dashboard' },
+    { key: 'contacts', label: 'Contacts & Types' },
+    { key: 'locations', label: 'Bureaux & Partenaires' },
+    { key: 'usermanagements', label: 'Gestion Utilisateurs' },
+    { key: 'profileadmin', label: 'Profil Admin'}
   ];
 
   const frontOfficeItems = [
-    { key: 'home', label: 'Retour au site', icon: '🏠' }
+    { key: 'home', label: 'Retour au site' }
   ];
 
   return (
