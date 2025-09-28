@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import BackOfficeMenu from '../components/BackOfficeMenu';
-import './contact.css';
+import './Contact.css';
 
 const Contact = ({ onNavigate, onLogout, currentPage }) => {
   const [activeTab, setActiveTab] = useState('contacts');

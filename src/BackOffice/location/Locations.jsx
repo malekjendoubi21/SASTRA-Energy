@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import BackOfficeMenu from '../components/BackOfficeMenu';
-import './locations.css';
+import './Locations.css';
 
 const Locations = ({ onNavigate, onLogout, currentPage }) => {
   const [activeTab, setActiveTab] = useState('locations');
