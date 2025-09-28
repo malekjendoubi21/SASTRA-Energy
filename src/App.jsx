@@ -60,8 +60,10 @@ function App() {
     console.log('Login success - UserType:', typeUser)
     if (typeUser === 'admin') {
       setCurrentPage('dashboard')
+      window.location.hash = 'dashboard'
     } else {
       setCurrentPage('profile')
+      window.location.hash = 'profile'
     }
   }
 
@@ -71,6 +73,8 @@ function App() {
     localStorage.removeItem('token')
     localStorage.removeItem('typeUser')
     setCurrentPage('home')
+    window.location.hash = 'home'
+
   }
 
   // Render the current page

@@ -40,11 +40,11 @@ const Dashboard = ({ onNavigate, onLogout, currentPage }) => {
         fetchRegionStats();
     }, []);
 
-    // Centrer la carte sur le premier marker ou sur 0,0
+    // Centrer la carte sur le premier marker ou sur Tunis par défaut
     const mapCenter =
         regionStats.length > 0
             ? [regionStats[0].latitude, regionStats[0].longitude]
-            : [0, 0];
+            : [36.8065, 10.1815];
 
     return (
         <div className="dashboard-container">
