@@ -19,7 +19,7 @@
     display: flex;
     align-items: center;
     gap: 30px;
-    border-left: 5px solid var(--primary-yellow);
+    border-left: 5px solid var(--primary-blue);
 }
 
 .profile-avatar {
@@ -30,7 +30,7 @@
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background: var(--gradient-primary);
+    background: var(--primary-blue);
     color: var(--white);
     display: flex;
     align-items: center;
@@ -112,7 +112,7 @@
     border-radius: 20px;
     padding: 30px;
     box-shadow: var(--shadow-md);
-    border-left: 5px solid var(--primary-yellow);
+    border-left: 5px solid var(--primary-blue);
 }
 
 .section-header {
@@ -132,7 +132,7 @@
 }
 
 .edit-btn {
-    background: var(--gradient-primary);
+    background: var(--primary-blue);
     color: var(--white);
     border: none;
     padding: 10px 20px;
@@ -151,11 +151,11 @@
 }
 
 .security-btn {
-    background: var(--gradient-secondary);
+    background: var(--primary-blue);
 }
 
 .security-btn:hover {
-    box-shadow: 0 5px 15px rgba(255, 140, 0, 0.4);
+    box-shadow: 0 5px 15px rgba(30, 58, 95, 0.4);
 }
 
 .info-grid {
@@ -198,7 +198,7 @@
     background: #fff3cd;
     padding: 20px;
     border-radius: 15px;
-    border-left: 4px solid var(--secondary-yellow);
+    border-left: 4px solid var(--primary-blue);
 }
 
 .security-info p {
@@ -213,13 +213,13 @@
     padding: 30px;
     box-shadow: var(--shadow-md);
     text-align: center;
-    border-left: 5px solid var(--accent-orange);
+    border-left: 5px solid var(--primary-blue);
 }
 
 .logout-btn {
-    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
-    color: var(--white);
-    border: none;
+    background: var(--white);
+    color: #ff364a;
+    border: 2px solid #ff364a;
     padding: 15px 30px;
     border-radius: 25px;
     cursor: pointer;
@@ -232,6 +232,8 @@
 }
 
 .logout-btn:hover {
+    background: #ff364a;
+    color: var(--white);
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);
 }
@@ -271,7 +273,7 @@
     overflow-y: auto;
     box-shadow: var(--shadow-lg);
     animation: slideIn 0.3s ease;
-    border-left: 5px solid var(--primary-yellow);
+    border-left: 5px solid var(--primary-blue);
 }
 
 @keyframes slideIn {
@@ -390,7 +392,7 @@
 }
 
 .save-btn {
-    background: var(--gradient-primary);
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
     color: var(--white);
     border: none;
     padding: 12px 24px;
@@ -401,7 +403,7 @@
 }
 
 .save-btn:hover {
-    background: var(--gradient-secondary);
+    background: linear-gradient(135deg, var(--primary-blue-dark) 0%, var(--primary-blue) 100%);
     transform: translateY(-1px);
     box-shadow: var(--shadow-md);
 }

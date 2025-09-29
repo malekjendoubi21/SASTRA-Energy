@@ -309,6 +309,13 @@ tbody tr:hover {
 
 /* Responsive */
 
+@media (max-width: 1024px) {
+    .contact-content {
+        margin-left: 200px;
+        padding: 25px;
+    }
+}
+
 @media (max-width: 768px) {
     .contact-content {
         margin-left: 0;
@@ -338,6 +345,44 @@ tbody tr:hover {
     th,
     td {
         padding: 8px 12px;
+    }
+    .tabs {
+        flex-wrap: wrap;
+    }
+    .tab-button {
+        flex: 1;
+        min-width: 120px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-content {
+        padding: 15px 10px;
+    }
+    .content-header h1 {
+        font-size: 1.8rem;
+    }
+    table {
+        font-size: 0.8rem;
+    }
+    th,
+    td {
+        padding: 6px 8px;
+    }
+    .modal {
+        width: 98%;
+        margin: 10px;
+        padding: 15px;
+    }
+    .modal-header h2 {
+        font-size: 1.2rem;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        font-size: 16px;
+        /* Prevent zoom on iOS */
     }
 }
 

@@ -13,6 +13,7 @@ import ContactManagement from './BackOffice/contacts/Contact'
 import LocationsManagement from './BackOffice/location/Locations'
 import ProfileAdmin from './BackOffice/profileAdmin/ProfileAdmin'
 import UsersManagement from './BackOffice/usersManagement/UsersManagement'
+import Region from './BackOffice/region/Region'
 
 
 function App() {
@@ -25,25 +26,35 @@ function App() {
     const token = localStorage.getItem('token')
     const typeUser = localStorage.getItem('typeUser')
     
+    // Vérifier le hash de l'URL au chargement
+    const hash = window.location.hash.replace('#', '') || 'home'
+    const validFrontPages = ['home', 'about', 'references', 'contact', 'login', 'profile']
+    const isBackOfficePage = ['dashboard', 'contacts', 'locations', 'profileadmin', 'usermanagements', 'region'].includes(hash)
+    
     if (token) {
       setIsAuthenticated(true)
       setUserType(typeUser)
       console.log('App loaded - Token:', token, 'UserType:', typeUser)
       
-      // Vérifier si on refresh sur une page backoffice
-      const hash = window.location.hash.replace('#', '')
-      const isBackOfficePage = ['dashboard', 'contacts', 'locations', 'profileadmin', 'usermanagements'].includes(hash)
-      
+      // Utilisateur authentifié - vérifier les permissions pour les pages backoffice
       if (isBackOfficePage && typeUser === 'admin') {
         setCurrentPage(hash)
-      } else if (hash && !isBackOfficePage) {
-        // Si c'est une page frontoffice valide, aller dessus
-        const validFrontPages = ['home', 'about', 'references', 'contact', 'login', 'profile']
-        if (validFrontPages.includes(hash)) {
-          setCurrentPage(hash)
-        }
+      } else if (hash === 'profile' || validFrontPages.includes(hash)) {
+        setCurrentPage(hash)
+      } else {
+        // Page invalide ou non autorisée, aller à home
+        setCurrentPage('home')
+        window.location.hash = 'home'
       }
-      // Sinon garder 'home' par défaut
+    } else {
+      // Utilisateur non authentifié - seulement les pages publiques
+      if (validFrontPages.includes(hash) && hash !== 'profile') {
+        setCurrentPage(hash)
+      } else {
+        // Page qui nécessite une authentification ou invalide
+        setCurrentPage('home')
+        window.location.hash = 'home'
+      }
     }
     
     setIsLoading(false)
@@ -111,18 +122,20 @@ function App() {
         return <ProfileAdmin onNavigate={handleNavigation} onLogout={handleLogout} currentPage={currentPage} />
       case 'usermanagements':
         return <UsersManagement onNavigate={handleNavigation} onLogout={handleLogout} currentPage={currentPage} />
+        case 'region':
+        return <Region onNavigate={handleNavigation} onLogout={handleLogout} currentPage={currentPage} />
       default:
         return <Dashboard onNavigate={handleNavigation} onLogout={handleLogout} currentPage={currentPage} />
     }
   }
 
   const renderCurrentPage = () => {
-    const isBackOffice = ['dashboard', 'contacts', 'locations', 'profileadmin', 'usermanagements'].includes(currentPage);
+    const isBackOffice = ['dashboard', 'contacts', 'locations', 'profileadmin', 'usermanagements', 'region'].includes(currentPage);
     return isBackOffice ? renderBackOfficePage() : renderFrontOfficePage();
   }
 
   // Vérifier si on est dans le backoffice
-  const isBackOffice = ['dashboard', 'contacts', 'locations', 'profileadmin', 'usermanagements'].includes(currentPage);
+  const isBackOffice = ['dashboard', 'contacts', 'locations', 'profileadmin', 'usermanagements', 'region'].includes(currentPage);
 
   if (isLoading) {
     return (

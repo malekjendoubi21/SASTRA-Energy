@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import BackOfficeMenu from '../components/BackOfficeMenu';
+import DetailUser from './DetailUser';
 import './UsersManagement.css';
 
 const UsersManagement = ({ onNavigate, onLogout, currentPage }) => {
@@ -13,6 +14,7 @@ const UsersManagement = ({ onNavigate, onLogout, currentPage }) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showDetailModal, setShowDetailModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
 
   // État pour le formulaire
@@ -108,6 +110,20 @@ const UsersManagement = ({ onNavigate, onLogout, currentPage }) => {
     setShowDeleteModal(true);
   };
 
+  const handleDetail = async (user) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(getApiUrl(`/users/${user._id}`), {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setSelectedUser(response.data);
+      setShowDetailModal(true);
+    } catch (err) {
+      console.error('Erreur lors du chargement des détails:', err);
+      setError('Erreur lors du chargement des détails de l\'utilisateur');
+    }
+  };
+
   const handleAdd = () => {
     setFormData({
       nom: '',
@@ -158,7 +174,7 @@ const UsersManagement = ({ onNavigate, onLogout, currentPage }) => {
     clearMessages();
     try {
       const token = localStorage.getItem('token');
-      await axios.put(getApiUrl(`/users/${selectedUser.id}`), formData, {
+      await axios.put(getApiUrl(`/users/${selectedUser._id}`), formData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setShowEditModal(false);
@@ -182,7 +198,7 @@ const UsersManagement = ({ onNavigate, onLogout, currentPage }) => {
     clearMessages();
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(getApiUrl(`/users/${selectedUser.id}`), {
+      await axios.delete(getApiUrl(`/users/${selectedUser._id}`), {
         headers: { Authorization: `Bearer ${token}` }
       });
       setShowDeleteModal(false);
@@ -203,6 +219,7 @@ const UsersManagement = ({ onNavigate, onLogout, currentPage }) => {
     setShowEditModal(false);
     setShowDeleteModal(false);
     setShowAddModal(false);
+    setShowDetailModal(false);
     setSelectedUser(null);
     setFormData({
       nom: '',
@@ -257,8 +274,8 @@ const UsersManagement = ({ onNavigate, onLogout, currentPage }) => {
               </thead>
               <tbody>
                 {users.map((user) => (
-                  <tr key={user.id}>
-                    <td>{user.id}</td>
+                  <tr key={user._id}>
+                    <td>{user._id}</td>
                     <td>{user.nom}</td>
                     <td>{user.prenom}</td>
                     <td>{user.email}</td>
@@ -280,6 +297,7 @@ const UsersManagement = ({ onNavigate, onLogout, currentPage }) => {
                     </td>
                     <td>
                       <div className="action-buttons">
+                        <button className="btn-detail" onClick={() => handleDetail(user)}>Détails</button>
                         <button className="btn-edit" onClick={() => handleEdit(user)}>Modifier</button>
                         <button className="btn-delete" onClick={() => handleDelete(user)}>Supprimer</button>
                       </div>
@@ -457,6 +475,11 @@ const UsersManagement = ({ onNavigate, onLogout, currentPage }) => {
               </div>
             </div>
           </div>
+        )}
+
+        {/* Modale de détails */}
+        {showDetailModal && selectedUser && (
+          <DetailUser user={selectedUser} onClose={closeModals} />
         )}
       </div>
     </div>

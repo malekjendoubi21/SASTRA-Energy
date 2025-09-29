@@ -112,6 +112,13 @@
 
 /* Responsive */
 
+@media (max-width: 1024px) {
+    .profile-admin-content {
+        margin-left: 200px;
+        padding: 25px;
+    }
+}
+
 @media (max-width: 768px) {
     .profile-admin-content {
         margin-left: 0;
@@ -129,5 +136,34 @@
     .btn-save,
     .btn-cancel {
         width: 100%;
+    }
+    .form-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .form-group {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-admin-content {
+        padding: 15px 10px;
+    }
+    .profile-header h1 {
+        font-size: 1.8rem;
+    }
+    .profile-form {
+        padding: 15px;
+    }
+    .form-group input,
+    .form-group textarea {
+        font-size: 16px;
+        /* Prevent zoom on iOS */
+    }
+    .btn-save,
+    .btn-cancel {
+        padding: 12px;
+        font-size: 1rem;
     }
 }

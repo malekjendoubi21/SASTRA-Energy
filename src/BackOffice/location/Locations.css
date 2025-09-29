@@ -349,6 +349,13 @@ tbody tr:hover {
 
 /* Responsive */
 
+@media (max-width: 1024px) {
+    .locations-content {
+        margin-left: 200px;
+        padding: 25px;
+    }
+}
+
 @media (max-width: 768px) {
     .locations-content {
         margin-left: 0;
@@ -382,5 +389,40 @@ tbody tr:hover {
     .partner-logo-preview {
         width: 40px;
         height: 40px;
+    }
+    .location-filters {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .filter-group {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .locations-content {
+        padding: 15px 10px;
+    }
+    .content-header h1 {
+        font-size: 1.8rem;
+    }
+    table {
+        font-size: 0.8rem;
+    }
+    th,
+    td {
+        padding: 6px 8px;
+    }
+    .modal {
+        width: 98%;
+        margin: 10px;
+        padding: 15px;
+    }
+    .modal-header h2 {
+        font-size: 1.2rem;
+    }
+    .partner-logo-preview {
+        width: 30px;
+        height: 30px;
     }
 }

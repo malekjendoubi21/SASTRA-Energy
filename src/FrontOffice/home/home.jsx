@@ -3,8 +3,6 @@ import './Home.css';
 const API_URL = import.meta.env.VITE_API_URL;
 import axios from 'axios';
 const Home = ({ onNavigate, isAuthenticated }) => {
-  const [showPrompt, setShowPrompt] = useState(true);
-  const [isClosing, setIsClosing] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   
   const installationImages = [
@@ -13,15 +11,6 @@ const Home = ({ onNavigate, isAuthenticated }) => {
     '/home/photo3.jpeg',
     '/home/photo4.jpeg'
   ];
-
-  useEffect(() => {
-    // Masquer le prompt après 8 secondes
-    const timer = setTimeout(() => {
-      handleClosePrompt();
-    }, 8000);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
     // Changer l'image toutes les 4 secondes pour le diaporama
@@ -64,16 +53,6 @@ const Home = ({ onNavigate, isAuthenticated }) => {
       console.warn("La géolocalisation n'est pas supportée par ce navigateur.");
     }
   }, [API_URL]);
-
-
-
- const handleClosePrompt = () => {
-    setIsClosing(true);
-    // Attendre la fin de l'animation avant de masquer complètement
-    setTimeout(() => {
-      setShowPrompt(false);
-    }, 500);
-  };
   return (
     <div className="home">
       {/* Hero Section */}
@@ -230,44 +209,52 @@ const Home = ({ onNavigate, isAuthenticated }) => {
         </div>
       </section>
 
-      {/* Prompt STEG Section */}
-      {showPrompt && (
+      {/* STEG Prompt Section - Always Visible */}
         <section className="steg-prompt-section">
           <div className="container">
-            <div className={`steg-prompt ${isClosing ? 'closing' : ''}`}>
+          <div className="steg-prompt">
               <div className="prompt-content">
-                <button className="prompt-close" onClick={handleClosePrompt}>
-                  ×
-                </button>
-                <p>
-                  <strong>Vous avez un problème avec votre facture STEG ?</strong><br/>
-                  <span className="highlight">Vous rêvez d'une facture à 0 DT ?</span><br/>
-                  Avec <strong>SASTRA Energy</strong>, ce rêve devient réalité.
-                </p>
-                <div className="flags">
-                  <span>Grâce à la technologie allemande 🇩🇪 et à l'expertise tunisienne 🇹🇳</span>
+              <div className="prompt-header">
+                <div className="prompt-icon">⚡</div>
+                <h3>Économisez sur Votre Facture STEG !</h3>
+              </div>
+                <div className="prompt-body">
+                  <p>
+                    <strong>💡 Vous avez un problème avec votre facture STEG ?</strong><br/>
+                    <span className="highlight">🌟 Vous rêvez d'une facture à 0 DT ?</span><br/>
+                    Avec <strong>SASTRA Energy</strong>, ce rêve devient réalité grâce à nos solutions solaires innovantes !
+                  </p>
+                  <div className="benefits-list">
+                    <div className="benefit-item">
+                      <span className="benefit-icon">☀️</span>
+                      <span>Énergie solaire gratuite</span>
+                    </div>
+                    <div className="benefit-item">
+                      <span className="benefit-icon">💰</span>
+                      <span>Économies jusqu'à 100%</span>
+                    </div>
+                    <div className="benefit-item">
+                      <span className="benefit-icon">🏠</span>
+                      <span>Installation à domicile</span>
+                    </div>
+                  </div>
+                  <div className="flags">
+                    <span>🇩🇪 Technologie allemande + �� Expertise tunisienne</span>
+                  </div>
+                </div>
+                <div className="prompt-actions">
+                  <button className="btn-primary" onClick={() => onNavigate && onNavigate('contact')}>
+                    Obtenir un Devis Gratuit
+                  </button>
+                  <button className="btn-secondary" onClick={() => onNavigate && onNavigate('references')}>
+                    Voir Nos Réalisations
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         </section>
-      )}
 
-      {/* CTA Section */}
-      <section className="cta-section">
-        <div className="cta-content">
-          <h2>Prêt à Passer à l'Énergie Solaire ?</h2>
-          <p>Contactez nos experts pour une étude personnalisée de votre projet</p>
-          <div className="cta-buttons">
-            <button className="btn-primary" onClick={() => onNavigate && onNavigate('contact')}>
-              Demander un Devis
-            </button>
-            <button className="btn-outline" onClick={() => onNavigate && onNavigate('references')}>
-              En Savoir Plus
-            </button>
-          </div>
-        </div>
-      </section>
     </div>
   );
 };

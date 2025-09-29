@@ -1,18 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './BackOfficeMenu.css';
 
 const BackOfficeMenu = ({ onNavigate, onLogout, currentPage }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const menuItems = [
-    { key: 'dashboard', label: 'Dashboard' },
-    { key: 'contacts', label: 'Contacts & Types' },
-    { key: 'locations', label: 'Bureaux & Partenaires' },
-    { key: 'usermanagements', label: 'Gestion Utilisateurs' },
-    { key: 'profileadmin', label: 'Profil Admin'}
+    { key: 'dashboard', label: 'Dashboard', icon: '📊' },
+    { key: 'region', label: 'Région', icon: '🗺️' },
+    { key: 'contacts', label: 'Contacts & Types', icon: '📞' },
+    { key: 'locations', label: 'Bureaux & Partenaires', icon: '🏢' },
+    { key: 'usermanagements', label: 'Gestion Utilisateurs', icon: '👥' },
+    { key: 'profileadmin', label: 'Profil Admin', icon: '👤' },
   ];
 
   const frontOfficeItems = [
-    { key: 'home', label: 'Retour au site' }
+    { key: 'home', label: 'Retour au site', icon: '🏠' }
   ];
+
+  const handleNavigation = (page) => {
+    setIsMenuOpen(false);
+    onNavigate(page);
+  };
+
+  const handleLogout = () => {
+    setIsMenuOpen(false);
+    onLogout();
+  };
 
   return (
     <div className="backoffice-menu">
@@ -26,7 +39,7 @@ const BackOfficeMenu = ({ onNavigate, onLogout, currentPage }) => {
           <button
             key={item.key}
             className={`menu-item ${currentPage === item.key ? 'active' : ''}`}
-            onClick={() => onNavigate(item.key)}
+            onClick={() => handleNavigation(item.key)}
           >
             <span className="menu-icon">{item.icon}</span>
             <span className="menu-label">{item.label}</span>
@@ -40,7 +53,7 @@ const BackOfficeMenu = ({ onNavigate, onLogout, currentPage }) => {
           <button
             key={item.key}
             className="menu-item front-office-item"
-            onClick={() => onNavigate(item.key)}
+            onClick={() => handleNavigation(item.key)}
           >
             <span className="menu-icon">{item.icon}</span>
             <span className="menu-label">{item.label}</span>
@@ -51,11 +64,15 @@ const BackOfficeMenu = ({ onNavigate, onLogout, currentPage }) => {
       <div className="menu-footer">
         <button
           className="menu-item logout-btn"
-          onClick={onLogout}
+          onClick={handleLogout}
         >
           <span className="menu-icon">🚪</span>
           <span className="menu-label">Déconnexion</span>
         </button>
+      </div>
+
+      <div className={`nav-toggle ${isMenuOpen ? 'active' : ''}`} onClick={() => setIsMenuOpen(!isMenuOpen)}>
+        <span className="menu-text">Menu</span>
       </div>
     </div>
   );

@@ -113,6 +113,7 @@
     gap: 8px;
 }
 
+.btn-detail,
 .btn-edit,
 .btn-delete {
     padding: 6px 12px;
@@ -122,6 +123,15 @@
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
+}
+
+.btn-detail {
+    background: var(--primary-blue);
+    color: white;
+}
+
+.btn-detail:hover {
+    background: var(--secondary-blue);
 }
 
 .btn-edit {
@@ -144,6 +154,13 @@
 
 
 /* Responsive */
+
+@media (max-width: 1024px) {
+    .users-management-content {
+        margin-left: 200px;
+        padding: 25px;
+    }
+}
 
 @media (max-width: 768px) {
     .users-management-content {
@@ -170,6 +187,43 @@
     .action-buttons {
         flex-direction: column;
         gap: 4px;
+    }
+    .modal-content {
+        width: 95%;
+        max-width: none;
+    }
+    .form-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .form-group {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .users-management-content {
+        padding: 15px 10px;
+    }
+    .users-header h1 {
+        font-size: 1.8rem;
+    }
+    .users-table th,
+    .users-table td {
+        padding: 10px 8px;
+        font-size: 0.85rem;
+    }
+    .btn-add-user {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+    }
+    .modal-content {
+        width: 98%;
+        margin: 10px;
+        padding: 15px;
+    }
+    .modal-header h2 {
+        font-size: 1.2rem;
     }
 }
 

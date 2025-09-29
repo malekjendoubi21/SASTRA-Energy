@@ -131,6 +131,9 @@
     .dashboard-stats-table td {
         padding: 10px 8px;
     }
+    .map-container {
+        height: 300px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -156,6 +159,9 @@
     .dashboard-stats-table th,
     .dashboard-stats-table td {
         padding: 8px 6px;
+    }
+    .map-container {
+        height: 250px;
     }
 }
 

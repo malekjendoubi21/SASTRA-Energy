@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import './Login.css';
 const API_URL = import.meta.env.VITE_API_URL; 
 
@@ -15,10 +16,63 @@ const Login = ({ onLoginSuccess }) => {
     adresse: '',
     region: '',
     ville: '',
+    latitude: null,
+    longitude: null,
     typeUser: 'user' // par défaut pour l'inscription
   });
 
   const [message, setMessage] = useState('');
+  const [locationAvailable, setLocationAvailable] = useState(false);
+
+  const getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const { latitude, longitude } = position.coords;
+          setFormData(prev => ({ ...prev, latitude, longitude }));
+          setLocationAvailable(true);
+
+          // Reverse geocoding pour remplir les champs d'adresse
+          try {
+            const response = await axios.get(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
+            const data = response.data;
+            const adresse = data.display_name;
+            const region = data.address?.state || '';
+            const ville = data.address?.city || data.address?.town || data.address?.village || '';
+            setFormData(prev => ({ ...prev, adresse, region, ville }));
+          } catch (error) {
+            console.error('Erreur reverse geocoding:', error);
+          }
+        },
+        (error) => {
+          console.error('Erreur géolocalisation:', error);
+          setLocationAvailable(false);
+          Swal.fire({
+            icon: 'error',
+            title: 'Localisation bloquée',
+            text: 'Pour vous inscrire, vous devez autoriser l\'accès à votre position. Veuillez activer la géolocalisation dans les paramètres de votre navigateur.',
+            confirmButtonText: 'OK'
+          });
+          setMessage('Localisation requise pour l\'inscription. Veuillez autoriser l\'accès à votre position.');
+        }
+      );
+    } else {
+      setLocationAvailable(false);
+      Swal.fire({
+        icon: 'error',
+        title: 'Géolocalisation non supportée',
+        text: 'Votre navigateur ne supporte pas la géolocalisation. Pour vous inscrire, un navigateur moderne avec géolocalisation est requis.',
+        confirmButtonText: 'OK'
+      });
+      setMessage('Géolocalisation non supportée par ce navigateur.');
+    }
+  };
+
+  useEffect(() => {
+    if (mode === 'register') {
+      getLocation();
+    }
+  }, [mode]);
 
   const handleToggle = () => {
     setMode(mode === 'login' ? 'register' : 'login');
@@ -47,7 +101,16 @@ const handleSubmit = async (e) => {
 
   // Validation côté client pour l'inscription
   if (mode === 'register') {
-    if (!formData.nom || !formData.prenom || !formData.mail || !formData.mdp || !formData.numeroTelephone) {
+    if (!locationAvailable) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Inscription impossible',
+        text: 'La localisation est requise pour l\'inscription. Veuillez autoriser l\'accès à votre position dans les paramètres de votre navigateur.',
+        confirmButtonText: 'OK'
+      });
+      return;
+    }
+    if (!formData.nom || !formData.prenom || !formData.mail || !formData.mdp || !formData.numeroTelephone || !formData.latitude || !formData.longitude) {
       setMessage('Veuillez remplir tous les champs obligatoires.');
       return;
     }
@@ -101,6 +164,8 @@ const handleSubmit = async (e) => {
         mail: formData.mail,
         motDePasse: formData.mdp,
         numeroTelephone: formData.numeroTelephone,
+        latitude: formData.latitude,
+        longitude: formData.longitude,
         ...(formData.age && { age: parseInt(formData.age) }),
         ...(formData.adresse && { adresse: formData.adresse }),
         ...(formData.region && { region: formData.region }),
@@ -223,7 +288,17 @@ const handleSubmit = async (e) => {
             </div>
           )}
 
-          <button type="submit" className="submit-btn">
+          {mode === 'register' && !locationAvailable && (
+            <div className="location-warning">
+              ⚠️ La localisation est requise pour l'inscription. Veuillez autoriser l'accès à votre position.
+            </div>
+          )}
+
+          <button 
+            type="submit" 
+            className="submit-btn"
+            disabled={mode === 'register' && !locationAvailable}
+          >
             {mode === 'login' ? 'Se connecter' : mode === 'register' ? "S'inscrire" : 'Envoyer le code'}
           </button>
         </form>
