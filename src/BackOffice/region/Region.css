@@ -165,6 +165,73 @@
     }
 }
 
+@media (max-width: 360px) {
+    .dashboard-content {
+        padding: 10px 8px;
+    }
+    .dashboard-header {
+        margin-bottom: 20px;
+    }
+    .dashboard-header h1 {
+        font-size: 1.5rem;
+        margin-bottom: 8px;
+    }
+    .dashboard-header p {
+        font-size: 0.9rem;
+    }
+    .dashboard-stats {
+        gap: 15px;
+    }
+    .stat-card {
+        padding: 12px;
+        border-radius: 8px;
+    }
+    .stat-card h3 {
+        font-size: 0.85rem;
+        margin-bottom: 10px;
+    }
+    .stat-number {
+        font-size: 1.1rem;
+    }
+    .dashboard-recent-activity {
+        padding: 15px;
+    }
+    .dashboard-recent-activity h2 {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+    .activity-item {
+        padding: 8px 0;
+    }
+    .activity-time {
+        font-size: 0.8rem;
+        min-width: 50px;
+        margin-right: 10px;
+    }
+    .activity-description {
+        font-size: 0.85rem;
+    }
+    .dashboard-stats-table {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    .dashboard-stats-table h2 {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+    .dashboard-stats-table table {
+        font-size: 0.75rem;
+    }
+    .dashboard-stats-table th,
+    .dashboard-stats-table td {
+        padding: 6px 4px;
+    }
+    .map-container {
+        height: 200px;
+        border-radius: 6px;
+    }
+}
+
 
 /* Styles pour le tableau des stats par région */
 

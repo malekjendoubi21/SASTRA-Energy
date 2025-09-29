@@ -227,6 +227,66 @@
     }
 }
 
+@media (max-width: 360px) {
+    .users-management-content {
+        padding: 10px 8px;
+    }
+    .users-header {
+        margin-bottom: 20px;
+    }
+    .users-header h1 {
+        font-size: 1.5rem;
+        margin-bottom: 8px;
+    }
+    .users-header p {
+        font-size: 0.9rem;
+    }
+    .btn-add-user {
+        width: 100%;
+        padding: 12px;
+        font-size: 0.95rem;
+        margin-top: 10px;
+    }
+    .users-table th,
+    .users-table td {
+        padding: 8px 6px;
+        font-size: 0.8rem;
+    }
+    .users-table th,
+    .users-table td:first-child {
+        padding-left: 8px;
+    }
+    .users-table th,
+    .users-table td:last-child {
+        padding-right: 8px;
+    }
+    .modal-content {
+        width: 100%;
+        margin: 5px;
+        padding: 12px;
+        border-radius: 6px;
+    }
+    .modal-header h2 {
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+    }
+    .form-group input,
+    .form-group select {
+        padding: 10px;
+        font-size: 16px;
+        /* Prevent zoom on iOS */
+    }
+    .form-actions {
+        gap: 8px;
+    }
+    .btn-save,
+    .btn-cancel {
+        flex: 1;
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+}
+
 
 /* Messages d'erreur et chargement */
 
