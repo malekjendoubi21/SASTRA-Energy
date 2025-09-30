@@ -47,7 +47,7 @@ const BackOfficeMenu = ({ onNavigate, onLogout, currentPage }) => {
     <>
       {/* Mobile Menu Toggle Button */}
       {isMobile && (
-        <button className={`nav-toggle ${isMenuOpen ? 'active' : ''}`} onClick={toggleMenu}>
+        <button className={`backoffice-nav-toggle ${isMenuOpen ? 'active' : ''}`} onClick={toggleMenu}>
           <span></span>
           <span></span>
           <span></span>
